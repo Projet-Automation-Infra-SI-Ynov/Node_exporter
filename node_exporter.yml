@@ -1,0 +1,31 @@
+---
+
+- hosts: node
+  become: yes
+  tasks: 
+    - name: Install pip3 with python3
+      apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+
+    - name: Install pip Docker
+      pip:
+        name: 
+          - docker
+          - docker-compose
+        state: present
+
+    - name: Install node_exporter container
+      docker_container:
+        name: node_exporter
+        image: quay.io/prometheus/node-exporter:latest
+        command:
+          - '--path.rootfs=/host'
+        network_mode: host
+        pid_mode: host
+        # ports:
+        #  - "80:8081"
+        #  - "5000:50000"
+        volumes:
+          - '/:/host:ro,rslave'
