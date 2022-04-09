@@ -1,6 +1,6 @@
 ---
 
-- hosts: node
+- hosts: worker
   become: yes
   tasks: 
     - name: Install pip3 with python3
@@ -13,7 +13,6 @@
       pip:
         name: 
           - docker
-          - docker-compose
         state: present
 
     - name: Install node_exporter container
@@ -24,8 +23,6 @@
           - '--path.rootfs=/host'
         network_mode: host
         pid_mode: host
-        # ports:
-        #  - "80:8081"
-        #  - "5000:50000"
         volumes:
           - '/:/host:ro,rslave'
+        restart: yes
