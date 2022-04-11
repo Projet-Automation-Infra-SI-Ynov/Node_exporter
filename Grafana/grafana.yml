@@ -26,3 +26,4 @@
         volumes:
           - '/:/host:ro,rslave'
         restart: yes
+        restart_policy: always
