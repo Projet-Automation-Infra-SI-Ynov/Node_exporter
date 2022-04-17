@@ -1,30 +1,20 @@
 node {
     stage('Git checkout') {
-        steps {
-            git branch: "develop", url: 'https://github.com/Projet-Automation-Infra-SI-Ynov/Node_exporter'
-        }
+        git branch: "develop", url: 'https://github.com/Projet-Automation-Infra-SI-Ynov/Node_exporter'
     }
     // ----------------- Grafana -----------------
     stage('Add Grafana address IP') {
-        steps {
-            sh "sed -i 's/IP_GRAFANA/192.168.23.170/g' ./Grafana/grafana.ini"
-        }
+        sh "sed -i 's/IP_GRAFANA/192.168.23.170/g' ./Grafana/grafana.ini"
     }
     stage('Execute playbook for Grafana server') {
-        steps {
-            sh "ansible-playbook -i ./Grafana/grafana.ini ./Grafana/grafana.yml"
-        }
+        sh "ansible-playbook -i ./Grafana/grafana.ini ./Grafana/grafana.yml"
     }
     // ----------------- Registry -----------------
     stage('Add Docker Registry address IP') {
-        steps {
-            sh "sed -i 's/IP_REGISTRY/192.168.23.162/g' ./Registry/registry.ini"
-        }
+        sh "sed -i 's/IP_REGISTRY/192.168.23.162/g' ./Registry/registry.ini"
     }
     stage('Execute playbook for Registry server') {
-        steps {
-            sh "ansible-playbook -i ./Registry/registry.ini ./Registry/registry.yml"
-        }
+        sh "ansible-playbook -i ./Registry/registry.ini ./Registry/registry.yml"
     }
     // ----------------- K3S -----------------
     // stage('Add K3S Master address IP') {
